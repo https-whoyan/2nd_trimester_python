@@ -1,6 +1,7 @@
 import sys
 from customException import CustomException
 
+
 class Run:
     numberOfTask: int = None
 
