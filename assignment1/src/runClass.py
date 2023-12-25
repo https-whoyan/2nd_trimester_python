@@ -10,8 +10,9 @@ class Run:
         try:
             if self.numberOfTask == None:
                 numberOfTask: int = int(input("Введите номер задачи: "))
-                if numberOfTask < 0 or numberOfTask > 25:
-                    raise CustomException("Номер задачи от 1 до 25...")
+                if numberOfTask < 0 or numberOfTask > 25  and (numberOfTask != 32) and (numberOfTask != 33):
+                    raise CustomException("Номер задачи от 1 до 25 (или 32, или 33)...")
+                if numberOfTask == 32 or numberOfTask == 33: numberOfTask -= 6
                 self.numberOfTask = numberOfTask
             func = msvFunctions[ self.numberOfTask - 1]
             func()
