@@ -192,3 +192,19 @@ def task20():
     msv: List[int] = customInput.customInput(n, int)
     setMsv: Set[int] = set(msv)
     print(f"Уникальные значения из массива {msv}: {setMsv}")
+
+
+def task21():
+    mySet: Set[float] = set((1.5, -4.8, 17))
+    print(mySet)
+    mySet2: Set[float] = set(customInput.customInput(5, float))
+    interSets: Set[float] = mySet & mySet2
+    print(f"Перечесение: {interSets}")
+    diffSet1: Set[float] = mySet.difference(mySet2)
+    print(f"Разница сета1 к сету2: {diffSet1}")
+    isSet1Subset2: bool = mySet.issubset(mySet2)
+    if isSet1Subset2: print(f"Да, {mySet} это сабсет {mySet2}")
+    else: print(f"Нет, {mySet} не является сабсетом {mySet2}")
+    
+    for commonEl in interSets: mySet2.remove(commonEl)
+    print(f"set2 после удаления общих элементов {interSets}: {mySet2}")

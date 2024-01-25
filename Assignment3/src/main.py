@@ -6,7 +6,7 @@ import importlib
 def returnMsvOfFunction():
     file_name = "tasks"
     module = importlib.import_module(file_name)
-    function_list = [getattr(module, f"task{i}") for i in range(1, 21)]
+    function_list = [getattr(module, f"task{i}") for i in range(1, 22)]
     return  function_list
 
 
