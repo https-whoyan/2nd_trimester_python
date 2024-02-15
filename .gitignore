@@ -170,6 +170,11 @@ MidTerm/Lib
 MidTerm/__pycache___
 MidTerm/pyvenv.sfg
 
+Assignment4/Scripts
+Assignment4/Lib
+Assignment4/__pycache___
+Assignment4/pyvenv.sfg
+
 # PyCharm
 #  JetBrains specific template is maintained in a separate JetBrains.gitignore that can
 #  be found at https://github.com/github/gitignore/blob/main/Global/JetBrains.gitignore
