@@ -1,4 +1,4 @@
-from data.csvWork import addToCsv, allNeedProducts
+from data.csvWork import addToCsv, allNeedProducts, readCsv
 from schemas.Product import Product
 from schemas.CustomException import CustomException
 
@@ -11,11 +11,12 @@ while True:
     print("Пожалуйста, выберите желаемое действие: ")
     print("1: Найти нужный товар (товар с нужным именем)")
     print("2: Добавить свой товар.")
-    print("3: Выйти из системы.")
+    print("3: Вывести все доступные товары.")
+    print("4: Выйти из системы.")
     print("Ваше действие: ", end="")
     try:
         typeOfAction: int = int(input().split()[0])
-        if typeOfAction < 1 or typeOfAction > 3: raise Exception
+        if typeOfAction < 1 or typeOfAction > 4: raise Exception
     except Exception:
         newException: CustomException = CustomException("Действие должно быть целым числом от 1 до 3")
         newException.printErr()
@@ -54,7 +55,20 @@ while True:
         addToCsv(newProduct)
         print("Товар добавлен.")
         print()
-    elif typeOfAction == 3: break
+    elif typeOfAction == 3:
+        allProducts: List[Product] = readCsv()
+        if len(allProducts) == 0:
+            print("Еще не было добавлено ни одного товара")
+            continue
+        print("Найденные следующие товары:")
+        for id, uniqueProdict in enumerate(allProducts):
+            print(f"id: {id + 1}", end="")
+            uniqueProdictDict: dict = uniqueProdict.__dict__
+            for key in uniqueProdictDict.keys():
+                print(f", {key}: {uniqueProdictDict[key]}", end="")
+            print()
+        print()
+    elif typeOfAction == 4: break
 
 print()
 print("Спасибо за использование сервиса!")

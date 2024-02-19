@@ -170,10 +170,19 @@ MidTerm/Lib
 MidTerm/__pycache___
 MidTerm/pyvenv.sfg
 
-Assignment4/Scripts
-Assignment4/Lib
-Assignment4/__pycache___
-Assignment4/pyvenv.sfg
+assigment4/
+assigment4/Scripts
+assigment4/Lib
+assigment4/__pycache___
+assigment4/pyvenv.sfg
+
+tgBotLCGrapghQLParser/Scripts
+tgBotLCGrapghQLParser/Lib
+tgBotLCGrapghQLParser/__pycache___
+tgBotLCGrapghQLParser/pyvenv.cfg
+tgBotLCGrapghQLParser/.env
+tgBotLCGrapghQLParser/.idea
+tgBotLCGrapghQLParser/Include
 
 # PyCharm
 #  JetBrains specific template is maintained in a separate JetBrains.gitignore that can
