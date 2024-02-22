@@ -1,7 +1,3 @@
-import asyncio
-import logging
-import sys
-
 from typing import List
 
 from aiogram.enums import ParseMode
@@ -14,13 +10,13 @@ from aiogram.utils.markdown import hbold
 
 from src.parser.parser import getLastACSubmissions
 
-from schemas import User
+from src.bot.schemas import User
 from src.database.utils import (
     insertUserToDB,
     containUserInDB,
     getUsernameFromUserID
 )
-from utils import (
+from src.bot.utils import (
     validateToUserSchema,
     newHandleUsersStanding,
     getMessageAboutChangingLCHandler,
@@ -76,7 +72,7 @@ async def message_handle(message: Message):
         InfoAboutMessageToUser: List[str] = getMessageAboutSubmissions(message.from_user.id)
         messageToUser: str = InfoAboutMessageToUser[0]
         parseModeInfo: str = InfoAboutMessageToUser[1]
-        await message.answer(messageToUser, parse_mode=parseModeInfo)
+        await message.answer(messageToUser, parse_mode=parseModeInfo, disable_web_page_preview=True)
     elif message.from_user.id in newHandleUsersStanding:
         currUser: User = validateToUserSchema(message.from_user)
         if not containUserInDB(currUser.id):
@@ -89,11 +85,6 @@ async def message_handle(message: Message):
                              "/setLCHandle \n/viewLCSubmissions")
 
 
-async def main() -> None:
+async def botMain() -> None:
     bot = Bot(BOT_TOKEN, parse_mode=ParseMode.HTML)
     await dp.start_polling(bot)
-
-
-if __name__ == "__main__":
-    logging.basicConfig(level=logging.INFO, stream=sys.stdout)
-    asyncio.run(main())

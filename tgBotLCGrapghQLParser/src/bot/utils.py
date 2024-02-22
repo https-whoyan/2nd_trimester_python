@@ -86,10 +86,11 @@ def getMessageAboutSubmissions(userID: int) -> [str]:
             messageToUser = f"Твои последние {sumbissionsCount} попыткок:\n\n"
         for sumbissionIndex, submission in enumerate(lastUserSubmissions):
             typedSumbission: LCSubmission = submission
-            print(typedSumbission.date)
+            htmlLinkToTask: str = f"https://leetcode.com/problems/{typedSumbission.task.titleSlug}"
             visualDiffSymbol: str = getVisualDiffSymbol(typedSumbission.task.difficulty)
             messageToUser += (f"{hbold(sumbissionIndex + 1)}.: {hbold(typedSumbission.task.id)}."
                               f"{hbold(typedSumbission.task.name)}\n"
+                              f"Ccылка на задачу: {hbold(htmlLinkToTask)}\n"
                               f"Сложность задачи: {hbold(typedSumbission.task.difficulty)} {visualDiffSymbol}\n"
                               f"Время решения: {hbold(typedSumbission.date)}")
             if sumbissionIndex != sumbissionsCount - 1:
