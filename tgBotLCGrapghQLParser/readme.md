@@ -43,7 +43,8 @@ The botMain function is launched from it, which starts the telegram bot. <br>
 All commands are validated through the message handler. </b> <br>
 Let's analyze the main command. As soon as the user types the <b>/viewLCSubmissions</b> command, the parser will fetch 
 the last 5 solved problems via GraphQL query, save them in the database, 
-and the attempts themselves will be taken from the database.
+and the attempts themselves will be taken from the database. <br>
+Primarily use <b>asynchronous</b> work during program execution work.
 
 <hr>
 <h3 align="center"> Used Libraries and technologies: </h3>
@@ -65,11 +66,11 @@ and the attempts themselves will be taken from the database.
 
 <hr>
 <h3 align="center"> My Contacts </h3>
-<b><font size="3"> Telegram: </font>
+<b>Telegram:
 <a href="https://t.me/https_whoyan">
 <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" width="18">
 </a> <br>
-<font size="3"> Gmail: </font>
+Gmail:
 <a href="mailto:yaniknezhin@gmail.com">
 <img src="https://upload.wikimedia.org/wikipedia/commons/7/7e/Gmail_icon_%282020%29.svg" width="20">
 </a> </b>
