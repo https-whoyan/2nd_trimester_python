@@ -19,7 +19,7 @@ def validateToUserSchema(tgUser: tgTypeUser) -> User:
     try:
         return User(
             tgUser.id,
-            lc_handle=""
+            ""
         )
     except Exception:
         return None

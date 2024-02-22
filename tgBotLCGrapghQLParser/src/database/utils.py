@@ -143,7 +143,7 @@ async def addNewSubmission(newSubmission: LCSubmission) -> bool:
 def containUserInDB(userID: int) -> bool:
     try:
         query: str = f"""
-            SELECT id as userID
+            SELECT id
             FROM users
             WHERE id={userID}
         """
@@ -158,6 +158,7 @@ def containUserInDB(userID: int) -> bool:
 
 def insertUserToDB(user: User):
     try:
+
         if containUserInDB(user.id):
             return
         stmt: str = f"""
@@ -169,6 +170,7 @@ def insertUserToDB(user: User):
         """
         cursor = get_cursor()
         cursor.execute(stmt)
+
         cursor.connection.commit()
         cursor.close()
     except Exception as e:
