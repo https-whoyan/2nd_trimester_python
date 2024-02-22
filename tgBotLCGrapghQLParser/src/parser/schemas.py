@@ -7,8 +7,8 @@ class LCTask:
     name: str
     difficulty: str
 
-    def __init__(self, id: int = 0, titleSlug: str = "", name: str = "", difficulty: str = ""):
-        self.id = id
+    def __init__(self, taskID: int, titleSlug: str, name: str, difficulty: str):
+        self.id = taskID
         self.titleSlug = titleSlug
         self.name = name
         self.difficulty = difficulty
