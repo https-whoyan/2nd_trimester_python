@@ -33,8 +33,10 @@ def getMessageAboutChangingLCHandler(message: Message) -> str:
     updateLCHandle(message.from_user.id, messageLCHandle)
     htmlLink: str = f"https://leetcode.com/{messageLCHandle}"
     messageToUser: str = (f"Ваш хэндл изменен на {messageLCHandle}. Согласно, хэндлу, ваша страница: {hbold(htmlLink)}"
-                          f"\n<b>Что бы просмотреть последние решенные задачи на LeetCode.com, "
-                          f"воспользуйтесь командой <u>/viewLCSubmissions</u></b>")
+                          f"\n\n<b>Что бы просмотреть последние решенные задачи на LeetCode.com, "
+                          f"воспользуйтесь командой <u>/viewLCSubmissions</u></b>\n"
+                          f"<b>Что бы просмотреть статистику вашей страницы на сайте LeetCode.com, "
+                          f"воспользуйтесь командой <u>/viewMyLCStats</u></b>")
     return messageToUser
 
 
@@ -89,7 +91,7 @@ def getMessageAboutSubmissions(userID: int) -> [str]:
             typedSumbission: LCSubmission = submission
             htmlLinkToTask: str = f"https://leetcode.com/problems/{typedSumbission.task.titleSlug}"
             visualDiffSymbol: str = getVisualDiffSymbol(typedSumbission.task.difficulty)
-            messageToUser += (f"{hbold(sumbissionIndex + 1)}.: {hbold(typedSumbission.task.id)}."
+            messageToUser += (f"{hbold(sumbissionIndex + 1)}. {hbold(typedSumbission.task.id)}."
                               f"{hbold(typedSumbission.task.name)}\n"
                               f"Ccылка на задачу: {hbold(htmlLinkToTask)}\n"
                               f"Сложность задачи: {hbold(typedSumbission.task.difficulty)} {visualDiffSymbol}\n"

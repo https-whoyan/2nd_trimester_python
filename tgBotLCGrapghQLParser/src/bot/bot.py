@@ -35,12 +35,16 @@ async def command_start_handler(message: Message) -> None:
         await message.answer(
             f"Привет, {hbold(message.from_user.full_name)}. Этот бот умеет сообщать тебе информацию"
             f" о твоих последних 5-ти успешных решенных задач, который ты"
-            f" решил на сайте {hbold('Leetcode.com')} И говорить информацию о твоем профиле. \n<b>Для начала укажи свой LC handle.</b>"
-            f" Это можно сделать командой /setLCHandle"
+            f" решил на сайте {hbold('Leetcode.com')} И говорить информацию о твоем профиле. \n"
+            f"<b>Для начала укажи свой LC handle.</b>"
+            f"Это можно сделать командой <b>/setLCHandle</b>\n"
+            f"<b>После этого у тебя есть возможно вписать команды: \n"
+            f"/viewLCSubmissions</b>: Покажет твои последние 5 решенных задач.\n"
+            f"<b>/viewMyLCStats</b>: Покажет твою статистику задач на LeetCode."
         )
     else:
-        await message.answer("Че ты, какой старт?))) Ты ботом уже пользовался. У меня есть только 2 команды: \n"
-                             "/setLCHandle \n/viewLCSubmissions")
+        await message.answer("Че ты, какой старт?))) Ты ботом уже пользовался. У меня есть только 3 команды: \n"
+                             "/setLCHandle \n/viewLCSubmissions\n/viewMyLCStats")
 
 
 async def setLCHandleCommandHandler(message: Message) -> None:
@@ -61,7 +65,7 @@ async def message_handle(message: Message):
         await message.answer("Получаю данные по последним отправкам:...")
         usernameFromDB: str = getUsernameFromUserID(message.from_user.id)
         if len(usernameFromDB) == 0:
-            await message.answer(f"Твоего хэндла нету в базе данных. Пожалуйста, добавь его,"
+            await message.answer(f"Твоего хэндла нету в базе данных. Пожалуйста, добавь его "
                                  f"командой {hbold('/setLCHandle')}")
             return
         # Парсинг данных

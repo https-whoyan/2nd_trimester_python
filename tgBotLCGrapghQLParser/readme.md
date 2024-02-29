@@ -24,7 +24,7 @@ src
 |    └── utils.py: database work functions
 |
 └── parser
-|    ├── parser.py: main parser file. GrapQL parser
+|    ├── parser.py: main parser file. GraphQL parsing method
 |    ├── schemas.py: classes for convenient work
 |    └── utils.py
 |
@@ -72,7 +72,7 @@ Primarily use <b>asynchronous</b> work during program execution work.
 </a> <br>
 Gmail:
 <a href="mailto:yaniknezhin@gmail.com">
-<img src="https://upload.wikimedia.org/wikipedia/commons/7/7e/Gmail_icon_%282020%29.svg" width="20">
+<img src="https://upload.wikimedia.org/wikipedia/comm   ons/7/7e/Gmail_icon_%282020%29.svg" width="20">
 </a> </b>
 
 <h3 align="center"> Thanks for watching and reading! </h3>
