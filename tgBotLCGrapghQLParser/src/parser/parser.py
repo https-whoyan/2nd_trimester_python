@@ -1,9 +1,10 @@
+import asyncio
 from typing import List
 
 from gql import gql
 from src.parser.utils import getLCClient
 from src.database.utils import addLCTask, getCurrTaskFromSlug, getLastSubmissions, addNewSubmission
-from src.parser.schemas import LCTask, LCSubmission
+from src.parser.schemas import LCTask, LCSubmission, UserLanguageState, LCUserFromGraphQLQuery
 import datetime
 from datetime import datetime
 
@@ -25,6 +26,29 @@ queryForTask = gql("""
             questionFrontendId
             title
             difficulty
+        }
+    }
+""")
+
+queryForProfile = gql("""
+    query userPublicProfile($username: String!) {
+        matchedUser(username: $username) {
+            profile {
+                ranking
+                realName
+                reputation
+            }
+        }
+    }
+""")
+
+queryForUserLanduageState = gql("""
+    query languageStats($username: String!) {
+        matchedUser(username: $username) {
+            languageProblemCount {
+                languageName
+                problemsSolved
+            }
         }
     }
 """)
@@ -92,3 +116,41 @@ async def getLastACSubmissions(userId: int, username: str):
     except Exception as e:
         print(e.__class__.__name__)
         raise e
+
+
+async def getInfoAboutUser(lcHandle: str) -> LCUserFromGraphQLQuery:
+    try:
+        # Получаю данных о языках пользователя
+        JSONUserLanguageStateInfo = await getLCClient().execute_async(queryForUserLanduageState, variable_values={
+            "username": lcHandle,
+        })
+
+        userLanguagesState: List[UserLanguageState] = []
+        print(JSONUserLanguageStateInfo['matchedUser'])
+        for languageState in JSONUserLanguageStateInfo['matchedUser']['languageProblemCount']:
+            userLanguagesState.append(UserLanguageState(
+                languageState['languageName'],
+                languageState['problemsSolved']
+            ))
+
+        userLanguagesState.sort()
+        if len(userLanguagesState) <= 5:
+            pass
+        else:
+            userLanguagesState = userLanguagesState[:5]
+
+        # Получаю данных о пользователе
+        JSONLCUserInfo = await getLCClient().execute_async(queryForProfile, variable_values={
+            "username": lcHandle,
+        })
+        print(JSONLCUserInfo, userLanguagesState, JSONLCUserInfo['matchedUser']['profile']['ranking'])
+        returnedData: LCUserFromGraphQLQuery = LCUserFromGraphQLQuery(
+            name=JSONLCUserInfo['matchedUser']['profile']['realName'],
+            ranking=JSONLCUserInfo['matchedUser']['profile']['ranking'],
+            languagesState=userLanguagesState,
+            reputation=JSONLCUserInfo['matchedUser']['profile']['reputation']
+        )
+
+        return returnedData
+    except Exception as e:
+        pass

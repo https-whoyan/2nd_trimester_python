@@ -4,6 +4,7 @@ from aiogram.types import Message
 from aiogram.types.user import User as tgTypeUser
 from aiogram.utils.markdown import hbold
 from src.bot.schemas import User
+from src.parser.schemas import LCUserFromGraphQLQuery
 
 from src.parser.schemas import LCSubmission
 
@@ -99,3 +100,20 @@ def getMessageAboutSubmissions(userID: int) -> [str]:
         return [messageToUser, 'HTML']
     except Exception as e:
         return ["", ""]
+
+
+def getMessageAboutLCStatistics(stats: LCUserFromGraphQLQuery) -> str:
+    try:
+        messageToUser: str = "<b>Ваша статистика LeetCode профиля:</b> \n\n"
+        messageToUser += f"Рейтинг: {stats.ranking}\n"
+        messageToUser += f"Ваше настоящее имя, согласено LC: {stats.name}\n"
+        messageToUser += f"Ваша репутация: {stats.reputation}\n\n"
+        messageToUser += "<b>Статистика по языкам:</b>\n"
+
+        for index, languageState in enumerate(stats.languagesState):
+            messageToUser += (f"<b>{index + 1}</b>. Название языка: {languageState.languageName}, "
+                              f"количество решенных задач на нем: {languageState.tasksCount}\n")
+
+        return messageToUser
+    except Exception as e:
+        pass

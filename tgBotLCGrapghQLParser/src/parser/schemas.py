@@ -1,4 +1,5 @@
 from datetime import datetime
+from typing import List
 
 
 class LCTask:
@@ -25,3 +26,30 @@ class LCSubmission:
         self.task = task
         self.userId = userId
         self.date = submission_date
+
+class UserLanguageState:
+    languageName: str
+    tasksCount: int
+
+    def __init__(self, languageName: str, tasksCount: int):
+        self.languageName = languageName
+        self.tasksCount = tasksCount
+
+    def __lt__(self, other):
+        return self.tasksCount > other.tasksCount
+
+
+class Person:
+    name: str
+
+
+class LCUserFromGraphQLQuery(Person):
+    ranking: int
+    languagesState: List[UserLanguageState]
+    reputation: int
+
+    def __init__(self, name: str, ranking: int, languagesState: List[UserLanguageState], reputation: int):
+        self.name = name
+        self.ranking = ranking
+        self.languagesState = languagesState
+        self.reputation = reputation

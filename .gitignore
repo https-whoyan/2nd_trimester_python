@@ -184,6 +184,16 @@ tgBotLCGrapghQLParser/.env
 tgBotLCGrapghQLParser/.idea
 tgBotLCGrapghQLParser/Include
 
+endTerm/Scripts
+endTerm/Lib
+endTerm/__pycache___
+endTerm/pyvenv.cfg
+endTerm/.env
+endTerm/.idea
+endTerm/Include
+endTerm/venv
+
+
 # PyCharm
 #  JetBrains specific template is maintained in a separate JetBrains.gitignore that can
 #  be found at https://github.com/github/gitignore/blob/main/Global/JetBrains.gitignore

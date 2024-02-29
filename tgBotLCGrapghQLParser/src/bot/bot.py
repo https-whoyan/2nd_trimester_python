@@ -8,7 +8,7 @@ from aiogram.filters import CommandStart
 from aiogram.types import Message
 from aiogram.utils.markdown import hbold
 
-from src.parser.parser import getLastACSubmissions
+from src.parser.parser import getLastACSubmissions, getInfoAboutUser
 
 from src.bot.schemas import User
 from src.database.utils import (
@@ -20,9 +20,9 @@ from src.bot.utils import (
     validateToUserSchema,
     newHandleUsersStanding,
     getMessageAboutChangingLCHandler,
-    getMessageAboutSubmissions
+    getMessageAboutSubmissions, getMessageAboutLCStatistics
 )
-
+from src.parser.schemas import LCUserFromGraphQLQuery
 
 dp = Dispatcher()
 
@@ -35,7 +35,7 @@ async def command_start_handler(message: Message) -> None:
         await message.answer(
             f"Привет, {hbold(message.from_user.full_name)}. Этот бот умеет сообщать тебе информацию"
             f" о твоих последних 5-ти успешных решенных задач, который ты"
-            f" решил на сайте {hbold('Leetcode.com')}. \n<b>Для начала укажи свой LC handle.</b>"
+            f" решил на сайте {hbold('Leetcode.com')} И говорить информацию о твоем профиле. \n<b>Для начала укажи свой LC handle.</b>"
             f" Это можно сделать командой /setLCHandle"
         )
     else:
@@ -73,6 +73,22 @@ async def message_handle(message: Message):
         messageToUser: str = InfoAboutMessageToUser[0]
         parseModeInfo: str = InfoAboutMessageToUser[1]
         await message.answer(messageToUser, parse_mode=parseModeInfo, disable_web_page_preview=True)
+    elif message.text == '/viewMyLCStats':
+        usernameFromDB: str = getUsernameFromUserID(message.from_user.id)
+        if len(usernameFromDB) == 0:
+            await message.answer(f"Твоего хэндла нету в базе данных. Пожалуйста, добавь его,"
+                                 f"командой {hbold('/setLCHandle')}")
+            return
+
+        # Парсинг данных
+        userLCStats: LCUserFromGraphQLQuery = await getInfoAboutUser(
+            usernameFromDB
+        )
+        await message.answer("Получаю данные по вашему профилю...")
+        messageToUser: str = getMessageAboutLCStatistics(userLCStats)
+        print(messageToUser)
+        await message.answer(messageToUser)
+        # Генерация сообщения:
     elif message.from_user.id in newHandleUsersStanding:
         currUser: User = validateToUserSchema(message.from_user)
         if not containUserInDB(currUser.id):
@@ -81,8 +97,8 @@ async def message_handle(message: Message):
         messageToUser: str = getMessageAboutChangingLCHandler(message)
         await message.answer(messageToUser)
     else:
-        await message.answer("Я не знаю, что ты пишешь)) У меня есть только 2 команды: \n"
-                             "/setLCHandle \n/viewLCSubmissions")
+        await message.answer("Я не знаю, что ты пишешь)) У меня есть только 3 команды: \n"
+                             "/setLCHandle\n/viewLCSubmissions\n/viewMyLCStats")
 
 
 async def botMain() -> None:
