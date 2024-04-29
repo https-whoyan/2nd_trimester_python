@@ -42,7 +42,7 @@ def getMessageAboutChangingLCHandler(message: Message) -> str:
 
 def isCorrectLCHandle(lcHadle: str) -> bool:
     try:
-        testURL = f"https://leetcode.com/{lcHadle}"
+        testURL = f"https://leetcode.com/u/{lcHadle}"
         response = requests.get(testURL)
         return response.status_code == 200
     except Exception:
